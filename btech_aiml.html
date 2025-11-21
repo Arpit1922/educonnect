@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>B.Tech (AI &amp; ML) — Course Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Page base */
+    :root{
+      --bg1: #0f1724;
+      --bg2: #1b1f3a;
+      --accent: #7c4dff;
+      --muted: #9aa4c0;
+      --card-bg: rgba(255,255,255,0.03);
+    }
+    html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:
+      radial-gradient(1200px 600px at 10% 10%, rgba(124,77,255,0.12), transparent 8%),
+      linear-gradient(180deg, var(--bg1), var(--bg2)); color:#e6eefb;}
+
+    /* centered layout */
+    .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:36px; }
+
+    /* card */
+    .card {
+      width:100%;
+      max-width:980px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(124,77,255,0.16);
+      box-shadow: 0 18px 50px rgba(2,6,23,0.6);
+      padding:34px;
+      border-radius:14px;
+      overflow:hidden;
+      position:relative;
+      backdrop-filter: blur(6px);
+      animation: slideUp .7s cubic-bezier(.2,.9,.25,1);
+    }
+
+    @keyframes slideUp {
+      from { opacity:0; transform: translateY(18px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    /* header */
+    .head {
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:18px;
+    }
+    h1 { margin:0; font-size:28px; color:#ffffff; letter-spacing:0.2px; }
+    .tag { font-size:13px; color:var(--muted); margin-top:6px; }
+
+    .badge {
+      display:inline-block;
+      background: linear-gradient(90deg, rgba(124,77,255,0.18), rgba(124,77,255,0.06));
+      color: var(--accent);
+      border: 1px solid rgba(124,77,255,0.22);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:600;
+      font-size:13px;
+    }
+
+    /* intro */
+    .intro { margin-top:14px; color:#cfdff9; line-height:1.7; font-size:15px; }
+
+    /* grid specs */
+    .specs {
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+      gap:14px;
+      margin-top:20px;
+    }
+
+    .spec {
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:10px;
+      padding:14px;
+      border:1px solid rgba(255,255,255,0.02);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .spec:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(12,14,35,0.6); }
+    .spec strong { color:#ffffff; display:block; margin-bottom:6px; font-size:14px; }
+    .spec span { color:var(--muted); font-size:14px; }
+
+    /* syllabus list */
+    h2 { color:#ffffff; margin-top:22px; margin-bottom:8px; }
+    ul {
+      list-style: none;
+      padding:12px;
+      border-radius:10px;
+      background: linear-gradient(180deg, rgba(124,77,255,0.03), rgba(7,10,23,0.02));
+      border:1px solid rgba(124,77,255,0.05);
+      color:#d7e6ff;
+      line-height:1.8;
+      margin:0;
+    }
+    ul li::before {
+      content:'●';
+      display:inline-block;
+      width:22px;
+      color:var(--accent);
+      margin-right:6px;
+      font-size:12px;
+      transform:scale(0.9);
+    }
+
+    /* buttons */
+    .buttons { margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .btn {
+      display:inline-flex; align-items:center; gap:8px;
+      text-decoration:none; padding:10px 14px; border-radius:10px; font-weight:700; font-size:14px;
+      transition: transform .14s ease, box-shadow .14s ease;
+    }
+    .btn.primary {
+      background: linear-gradient(90deg, var(--accent), #5a2cff);
+      color:white; box-shadow: 0 8px 30px rgba(92,45,255,0.18);
+      border: none;
+    }
+    .btn.primary:hover { transform: translateY(-4px); box-shadow: 0 14px 46px rgba(92,45,255,0.28); }
+
+    .btn.ghost {
+      background: transparent; color: #d7e6ff; border:1px solid rgba(255,255,255,0.06);
+    }
+    .btn.ghost:hover { transform: translateY(-3px); border-color: rgba(124,77,255,0.22); }
+
+    /* tiny placement card */
+    .placement {
+      margin-left:auto; min-width:220px; text-align:right;
+    }
+    .placement .value { font-size:20px; color:var(--accent); font-weight:800; }
+
+    /* footer/back */
+    .back { display:inline-block; margin-top:22px; color: #cfe1ff; text-decoration:none; font-weight:600; }
+    .back:hover { color:var(--accent); text-decoration:underline; }
+
+    /* responsive */
+    @media (max-width:760px){
+      .head { flex-direction:column; align-items:flex-start; }
+      .placement { text-align:left; margin-left:0; margin-top:8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="head">
+        <div>
+          <h1>B.Tech (AI &amp; ML) — Artificial Intelligence &amp; Machine Learning</h1>
+          <div class="tag">An industry-focused undergraduate program combining mathematics, programming, data engineering and machine learning systems.</div>
+        </div>
+
+        <div class="placement">
+          <div class="badge">Future-ready</div>
+          <div style="margin-top:10px; color:var(--muted); font-size:13px;">Avg. Starting CTC</div>
+          <div class="value">₹6.5 LPA</div>
+        </div>
+      </div>
+
+      <p class="intro">
+        The B.Tech AI &amp; ML program trains students in core CS fundamentals plus applied machine learning, deep learning,
+        data engineering, model deployment and ethical AI. Students learn to build, evaluate and scale intelligent systems used
+        in real-world products.
+      </p>
+
+      <h2>Course Specifications</h2>
+      <div class="specs">
+        <div class="spec">
+          <strong>Duration</strong>
+          <span>4 Years (8 Semesters)</span>
+        </div>
+
+        <div class="spec">
+          <strong>Eligibility</strong>
+          <span>10+2 with PCM / Entrance exam (JEE or institute-specific)</span>
+        </div>
+
+        <div class="spec">
+          <strong>Intake</strong>
+          <span>60 / 120 (depends on the institute)</span>
+        </div>
+
+        <div class="spec">
+          <strong>Core Topics</strong>
+          <span>Linear Algebra, Probability, Data Structures, ML, Deep Learning, NLP, Computer Vision</span>
+        </div>
+
+        <div class="spec">
+          <strong>Tools &amp; Frameworks</strong>
+          <span>Python, TensorFlow, PyTorch, Scikit-learn, Docker, Kubernetes</span>
+        </div>
+
+        <div class="spec">
+          <strong>Career Roles</strong>
+          <span>ML Engineer, Data Scientist, Research Engineer, MLOps Engineer</span>
+        </div>
+      </div>
+
+      <h2>Syllabus (High-level)</h2>
+      <ul>
+        <li><strong>Year 1:</strong> Mathematics for CS, Programming, Discrete Math, Physics</li>
+        <li><strong>Year 2:</strong> Data Structures, Statistics & Probability, Database Systems</li>
+        <li><strong>Year 3:</strong> Machine Learning, Deep Learning, Computer Vision, NLP</li>
+        <li><strong>Year 4:</strong> Big Data Engineering, MLOps, Major Project / Internship</li>
+      </ul>
+
+      <div class="buttons">
+        <a class="btn primary" href="syllabus_btech_aiml.pdf" download>📄 Download Syllabus (PDF)</a>
+        <a class="btn ghost" href="mailto:admissions@college.edu">✉️ Contact Department</a>
+        <a class="btn ghost" href="placements_btech_aiml.html">📈 Placement Info</a>
+      </div>
+
+      <a class="back" href="educourse.html">← Back to Course List</a>
+    </div>
+  </div>
+</body>
+</html>

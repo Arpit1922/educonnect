@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>B.Tech (CSE/IT) — Course Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* 🌈 General Page Setup */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #e0f7fa, #f1f8e9);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    /* 📘 Card Layout */
+    .card {
+      background: rgba(255, 255, 255, 0.97);
+      padding: 36px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      max-width: 980px;
+      width: 100%;
+      animation: fadeIn 0.8s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 🎓 Heading */
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      color: #1e4a47;
+      border-bottom: 3px solid #26a69a;
+      display: inline-block;
+      padding-bottom: 5px;
+    }
+
+    p.intro {
+      margin-top: 15px;
+      font-size: 16.5px;
+      color: #444;
+      line-height: 1.7;
+    }
+
+    /* 🧾 Specifications Section */
+    .specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+      margin-top: 20px;
+      margin-bottom: 25px;
+    }
+
+    .spec {
+      background: #e0f2f1;
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+      transition: all 0.2s ease;
+    }
+
+    .spec:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .spec strong { color: #00796b; }
+
+    /* 📚 Syllabus Section */
+    h2 {
+      color: #1e4a47;
+      margin-bottom: 10px;
+    }
+
+    ul {
+      background: #ffffff;
+      padding: 15px 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      line-height: 1.7;
+      color: #333;
+    }
+
+    /* 🔘 Buttons */
+    .buttons {
+      margin-top: 25px;
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      text-decoration: none;
+      background: #26a69a;
+      color: white;
+      padding: 12px 18px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: #1e857b;
+      transform: scale(1.05);
+    }
+
+    .btn.secondary {
+      background: #e0f2f1;
+      color: #00796b;
+      border: 1px solid #26a69a;
+    }
+
+    /* 🔙 Back link */
+    .back {
+      display: inline-block;
+      margin-top: 30px;
+      color: #1e4a47;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    .back:hover { color: #00796b; }
+
+    /* 📱 Responsive */
+    @media (max-width: 600px) {
+      .card { padding: 22px; }
+      h1 { font-size: 26px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="card">
+    <h1>B.Tech (CSE/IT) — Computer Science & Information Technology</h1>
+    <p class="intro">
+      The <strong>B.Tech in CSE/IT</strong> program blends computer science fundamentals with information technology applications. 
+      It emphasizes software design, web technologies, networking, and information systems to prepare students for modern IT-driven industries.
+    </p>
+
+    <h2>Course Specifications</h2>
+    <div class="specs">
+      <div class="spec"><strong>Duration:</strong><br>4 Years (8 Semesters)</div>
+      <div class="spec"><strong>Eligibility:</strong><br>10+2 with PCM or equivalent</div>
+      <div class="spec"><strong>Intake:</strong><br>120 Students (per batch)</div>
+      <div class="spec"><strong>Fees:</strong><br>As per institute norms</div>
+      <div class="spec"><strong>Core Areas:</strong><br>Programming, Networking, Web Development, Cloud Computing</div>
+      <div class="spec"><strong>Career Roles:</strong><br>Software Developer, System Analyst, IT Consultant</div>
+    </div>
+
+    <h2>Syllabus Overview</h2>
+    <ul>
+      <li><strong>Year 1:</strong> Programming Fundamentals, Mathematics, Digital Logic Design</li>
+      <li><strong>Year 2:</strong> Data Structures, Database Management, Computer Architecture</li>
+      <li><strong>Year 3:</strong> Operating Systems, Computer Networks, Web & Cloud Technologies</li>
+      <li><strong>Year 4:</strong> AI, Big Data Analytics, Major Project, Internship</li>
+    </ul>
+
+    <div class="buttons">
+      <a href="syllabus_btech_cseit.pdf" class="btn">📄 Download Syllabus (PDF)</a>
+      <a href="mailto:admissions@college.edu" class="btn secondary">✉️ Contact Department</a>
+      <a href="placements_btech_cseit.html" class="btn secondary">📈 Placement Info</a>
+    </div>
+
+    <a href="educourse.html" class="back">← Back to Course List</a>
+  </div>
+</body>
+</html>

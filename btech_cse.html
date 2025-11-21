@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>B.Tech (CSE) — Course Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    /* Page Styling */
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #d7eef5 0%, #cfe9e0 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+    }
+
+    /* Main Card */
+    .card {
+      background: rgba(255, 255, 255, 0.98);
+      padding: 36px;
+      border-radius: 14px;
+      box-shadow: 0 12px 34px rgba(12, 40, 80, 0.08);
+      max-width: 980px;
+      width: 100%;
+      animation: appear .7s ease;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Header */
+    h1 {
+      margin: 0;
+      font-size: 32px;
+      color: #0d3b3a;
+      border-bottom: 3px solid #17a2a2;
+      display: inline-block;
+      padding-bottom: 6px;
+    }
+
+    p.intro {
+      margin-top: 12px;
+      color: #3b4850;
+      font-size: 16.5px;
+      line-height: 1.65;
+    }
+
+    /* Specs grid */
+    .specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+      margin-bottom: 26px;
+    }
+
+    .spec {
+      background: #f7fffe;
+      padding: 14px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(12,40,80,0.04);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+
+    .spec:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 8px 24px rgba(12,40,80,0.08);
+    }
+
+    .spec strong { color: #0d5b5a; }
+
+    /* Syllabus */
+    h2 { color: #0d3b3a; margin-top: 6px; margin-bottom: 8px; }
+    ul {
+      background: #ffffff;
+      padding: 16px 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(12,40,80,0.03);
+      color: #333;
+      line-height: 1.7;
+    }
+
+    /* Buttons */
+    .buttons {
+      margin-top: 20px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-block;
+      text-decoration: none;
+      background: #17a2a2;
+      color: #fff;
+      padding: 11px 16px;
+      border-radius: 8px;
+      font-weight: 600;
+      transition: transform .15s ease, background .15s ease;
+    }
+
+    .btn:hover { transform: translateY(-4px); background: #0f8a89; }
+
+    .btn.secondary {
+      background: #e8fbfa;
+      color: #0d5b5a;
+      border: 1px solid #cceff0;
+    }
+
+    /* Back link */
+    .back {
+      display: inline-block;
+      margin-top: 26px;
+      color: #0d3b3a;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color .18s;
+    }
+    .back:hover { color: #117a78; }
+
+    /* Responsive */
+    @media (max-width: 640px) {
+      .card { padding: 20px; }
+      h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>B.Tech (CSE) — Computer Science & Engineering</h1>
+
+    <p class="intro">
+      B.Tech in Computer Science & Engineering (CSE) is a four-year undergraduate program focused on computing fundamentals,
+      software engineering, systems design, and modern technologies like cloud, AI, and cybersecurity. It prepares students for
+      technical roles in software development, research, and infrastructure.
+    </p>
+
+    <h2>Course Specifications</h2>
+    <div class="specs">
+      <div class="spec"><strong>Duration:</strong><br>4 Years (8 Semesters)</div>
+      <div class="spec"><strong>Eligibility:</strong><br>10+2 with Mathematics / Relevant entrance exam</div>
+      <div class="spec"><strong>Intake:</strong><br>Varies by institute (e.g., 120/180)</div>
+      <div class="spec"><strong>Fees:</strong><br>As per institute / scholarship options available</div>
+      <div class="spec"><strong>Core Subjects:</strong><br>Programming, Data Structures, OS, DBMS, CN, Algorithms</div>
+      <div class="spec"><strong>Career Options:</strong><br>Software Engineer, SDE, DevOps, Researcher, System Designer</div>
+    </div>
+
+    <h2>Syllabus (High-level)</h2>
+    <ul>
+      <li><strong>Year 1:</strong> Engineering Mathematics, Basic Programming, Physics, Fundamentals of CS</li>
+      <li><strong>Year 2:</strong> Data Structures & Algorithms, Computer Organization, Database Systems</li>
+      <li><strong>Year 3:</strong> Operating Systems, Computer Networks, Software Engineering, Electives</li>
+      <li><strong>Year 4:</strong> Advanced electives (AI, Cloud, Security), Major Project / Internship</li>
+    </ul>
+
+    <div class="buttons">
+      <a href="syllabus_btech_cse.pdf" class="btn">📄 Download Syllabus (PDF)</a>
+      <a href="mailto:admissions@college.edu" class="btn secondary">✉️ Contact Department</a>
+      <a href="placements_btech_cse.html" class="btn secondary" style="border-color:#bfeef0;">📈 Placement Info</a>
+    </div>
+
+    <a href="educourse.html" class="back">← Back to Course List</a>
+  </div>
+</body>
+</html>
