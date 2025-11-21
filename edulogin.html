@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Edu Connect - Login</title>
+  <style>
+    :root{
+      --bg: #f2f5f7;
+      --card: #ffffff;
+      --text: #222;
+      --muted: #666;
+      --brand: #004ad0;
+      --success: #198754;
+      --error: #d93025;
+    }
+    body{
+      font-family: Arial, Helvetica, sans-serif;
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      transition: background .25s, color .25s;
+    }
+    /* Dark theme variables */
+    body.dark{
+      --bg: #0f1113;
+      --card: #141618;
+      --text: #e6eef8;
+      --muted: #9aa4b2;
+      --brand: #3a82ff;
+    }
+    header{
+      background:var(--brand);
+      color: #fff;
+      padding:18px 16px;
+      text-align:center;
+      position:relative;
+    }
+    header h2{ margin:0; font-size:1.25rem; }
+    /* Theme toggle button */
+    .theme-toggle{
+      position:absolute;
+      right:14px;
+      top:10px;
+      border:0;
+      background:rgba(255,255,255,0.12);
+      color:#fff;
+      padding:8px 10px;
+      border-radius:8px;
+      cursor:pointer;
+      font-weight:700;
+    }
+    main{ display:flex; align-items:center; justify-content:center; min-height:70vh; padding:20px; }
+    .card{
+      width:100%; max-width:420px; background:var(--card); border-radius:10px; padding:26px; box-shadow:0 8px 24px rgba(10,10,10,0.06);
+      transition: background .25s, color .25s;
+    }
+    label{ display:block; margin-bottom:6px; font-weight:700; }
+    input[type=text], input[type=password]{
+      width:100%; padding:10px 12px; border-radius:8px; border:1px solid #d0d5dd; background:transparent; color:inherit; font-size:1rem;
+    }
+    body.dark input[type=text], body.dark input[type=password]{ border-color:#2b2f33; }
+    .pw-row{ display:flex; gap:8px; align-items:center; }
+    .pw-row input{ flex:1; }
+    .pw-toggle{
+      background:transparent; border:1px solid rgba(0,0,0,0.06); padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:700;
+    }
+    .remember-row{ display:flex; align-items:center; gap:8px; margin-top:8px; font-weight:600; }
+    button[type=submit]{ width:100%; padding:11px; background:var(--brand); color:#fff; border:0; border-radius:8px; font-weight:800; cursor:pointer; margin-top:10px; }
+    button[type=submit]:hover{ filter:brightness(.95); }
+    .message{ margin-top:8px; font-size:0.95rem; min-height:1.1em; }
+    .message.error{ color:var(--error); }
+    .message.success{ color:var(--success); }
+    .extra-links{ text-align:center; margin-top:12px; }
+    .extra-links a{ color:var(--brand); text-decoration:none; }
+    footer{ background:#222; color:#fff; text-align:center; padding:16px 8px; margin-top:28px; }
+    @media(max-width:420px){ .card{ padding:18px; } .theme-toggle{ top:8px; right:10px; padding:6px 8px; } }
+  </style>
+</head>
+<body>
+  <header>
+    <h2>EduConnect Login</h2>
+    <button id="themeToggle" class="theme-toggle" aria-pressed="false" aria-label="Toggle dark mode">🌙 Dark</button>
+  </header>
+
+  <main>
+    <form id="loginForm" class="card" novalidate>
+      <div>
+        <label for="email">Registered Email</label>
+        <input id="email" name="email" type="text" placeholder="Enter registered email" autocomplete="username" required />
+        <div id="userMsg" class="message" aria-live="polite"></div>
+      </div>
+
+      <div style="margin-top:12px;">
+        <label for="password">Password</label>
+        <div class="pw-row">
+          <input id="password" name="password" type="password" placeholder="Enter password" autocomplete="current-password" required />
+          <button type="button" id="togglePw" class="pw-toggle" aria-pressed="false" aria-label="Show password">Show</button>
+        </div>
+        <div id="pwMsg" class="message" aria-live="polite"></div>
+      </div>
+
+      <div class="remember-row" style="margin-top:14px;">
+        <input id="remember" type="checkbox" />
+        <label for="remember" style="margin:0;font-weight:700;">Remember me</label>
+        <div style="flex:1"></div>
+        <div id="attemptMsg" class="message" aria-live="polite"></div>
+      </div>
+
+      <button type="submit" id="loginBtn">Login</button>
+
+      <div class="extra-links" style="margin-top:10px;">
+        <p><a href="#" id="forgotLink">Forgot Password?</a></p>
+        <p>Don't have an account? <a href="eduform.html">Sign Up Here</a></p>
+      </div>
+
+      <p id="formMsg" class="message" aria-live="polite"></p>
+    </form>
+  </main>
+
+  <footer>
+    <p style="margin:6px 0">Contacts — Mobile: 9192631770 • Email: <a href="mailto:educonnect04@gmail.com" style="color:#9fd1ff">educonnect04@gmail.com</a></p>
+    <p style="margin:0">&copy; 2025 EduConnect. All rights reserved.</p>
+  </footer>
+
+  <script>
+  (function(){
+    const API_BASE = '/edu_connect/api.php';
+    const THEME_KEY = 'edu_theme';
+    const REMEMBER_KEY = 'edu_remember_user';
+    const LOCK_KEY = 'edu_lock_info';
+
+    // elements
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+    const form = document.getElementById('loginForm');
+    const emailEl = document.getElementById('email');
+    const passwordEl = document.getElementById('password');
+    const togglePw = document.getElementById('togglePw');
+    const rememberEl = document.getElementById('remember');
+
+    const userMsg = document.getElementById('userMsg');
+    const pwMsg = document.getElementById('pwMsg');
+    const formMsg = document.getElementById('formMsg');
+    const attemptMsg = document.getElementById('attemptMsg');
+
+    // ---------- theme ----------
+    function applyTheme(theme){
+      if(theme === 'dark'){ body.classList.add('dark'); themeToggle.textContent = '☀️ Light'; themeToggle.setAttribute('aria-pressed','true'); }
+      else { body.classList.remove('dark'); themeToggle.textContent = '🌙 Dark'; themeToggle.setAttribute('aria-pressed','false'); }
+    }
+    const savedTheme = localStorage.getItem(THEME_KEY);
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    applyTheme(savedTheme || (prefersDark ? 'dark' : 'light'));
+    themeToggle.addEventListener('click', () => {
+      const isDark = body.classList.toggle('dark');
+      applyTheme(isDark ? 'dark' : 'light');
+      localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
+    });
+
+    // ---------- password toggle ----------
+    togglePw.addEventListener('click', () => {
+      const isPwd = passwordEl.type === 'password';
+      passwordEl.type = isPwd ? 'text' : 'password';
+      togglePw.textContent = isPwd ? 'Hide' : 'Show';
+      togglePw.setAttribute('aria-pressed', String(isPwd));
+    });
+
+    // ---------- remember me ----------
+    (function loadRemember(){
+      const saved = localStorage.getItem(REMEMBER_KEY);
+      if(saved){
+        emailEl.value = saved;
+        rememberEl.checked = true;
+      }
+    })();
+
+    function saveRemember(){
+      if(rememberEl.checked) localStorage.setItem(REMEMBER_KEY, emailEl.value);
+      else localStorage.removeItem(REMEMBER_KEY);
+    }
+
+    // ---------- lock/attempts (local) ----------
+    function getLockInfo(){ try{ return JSON.parse(localStorage.getItem(LOCK_KEY) || '{}'); }catch{ return {}; } }
+    function setLockInfo(obj){ localStorage.setItem(LOCK_KEY, JSON.stringify(obj)); }
+    function recordFailedAttempt(email){
+      const info = getLockInfo();
+      if(!info[email]) info[email] = { attempts: 0, lockedUntil: null };
+      info[email].attempts++;
+      if(info[email].attempts >= 5) info[email].lockedUntil = Date.now() + 5*60*1000; // 5 minutes lock
+      setLockInfo(info);
+    }
+    function resetAttempts(email){
+      const info = getLockInfo();
+      if(info[email]) delete info[email];
+      setLockInfo(info);
+    }
+    function isLocked(email){
+      const info = getLockInfo();
+      const entry = info[email];
+      if(!entry) return { locked:false };
+      if(entry.lockedUntil && Date.now() < entry.lockedUntil){
+        const sec = Math.ceil((entry.lockedUntil - Date.now())/1000);
+        return { locked:true, secondsLeft: sec };
+      }
+      if(entry.lockedUntil && Date.now() >= entry.lockedUntil){
+        resetAttempts(email);
+        return { locked:false };
+      }
+      return { locked:false, attempts: entry.attempts || 0 };
+    }
+    function updateAttemptUI(email){
+      const st = isLocked(email);
+      if(st.locked){
+        attemptMsg.textContent = `Too many failed attempts. Try again in ${st.secondsLeft}s.`;
+        attemptMsg.className = 'message error';
+        return true;
+      } else {
+        if(st.attempts){
+          const left = Math.max(0, 5 - st.attempts);
+          attemptMsg.textContent = `Remaining attempts: ${left}`;
+          attemptMsg.className = 'message';
+        } else {
+          attemptMsg.textContent = '';
+          attemptMsg.className = 'message';
+        }
+        return false;
+      }
+    }
+
+    emailEl.addEventListener('input', () => updateAttemptUI(emailEl.value.trim().toLowerCase()));
+
+    // ---------- helpers ----------
+    function show(el, text, type){ el.textContent = text || ''; el.className = 'message ' + (type||''); }
+    function isEmail(val){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val); }
+
+    // ---------- form submit: call API ----------
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      show(userMsg,''); show(pwMsg,''); show(formMsg,'');
+      const email = emailEl.value.trim().toLowerCase();
+      const password = passwordEl.value;
+
+      if(!email){ show(userMsg,'Please enter your registered email.','error'); emailEl.focus(); return; }
+      if(!isEmail(email)){ show(userMsg,'Please enter a valid email address (registered email).','error'); emailEl.focus(); return; }
+      if(!password || password.length < 6){ show(pwMsg,'Password must be at least 6 characters.','error'); passwordEl.focus(); return; }
+
+      if(updateAttemptUI(email)) return; // locked
+
+      try{
+        show(formMsg,'Logging in…','');
+        const res = await fetch(API_BASE + '?route=login', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: {'Content-Type':'application/json'},
+          body: JSON.stringify({ email: email, password: password })
+        });
+
+        const j = await res.json().catch(()=>null);
+        if(!j){
+          show(formMsg,'Server did not respond with JSON. Try again later.','error');
+          return;
+        }
+
+        if(j.success){
+          // success -> clear attempts, save remember and redirect
+          resetAttempts(email);
+          saveRemember();
+          show(formMsg,'Login successful ✅ Redirecting…','success');
+          setTimeout(()=>{ window.location.href = '/edu_connect/homepage.html'; }, 700);
+        } else {
+          // login failed
+          if(res.status === 401){
+            recordFailedAttempt(email);
+            updateAttemptUI(email);
+            show(formMsg, j.error || 'Invalid credentials', 'error');
+          } else {
+            // other server error
+            show(formMsg, j.error || 'Login failed', 'error');
+          }
+        }
+      }catch(err){
+        console.error(err);
+        show(formMsg,'Network or server error. Check console.','error');
+      }
+    });
+
+    document.getElementById('forgotLink').addEventListener('click', (ev) => {
+      ev.preventDefault();
+      show(formMsg, 'Forgot password flow requires server-side reset email. Implement endpoint to support it.', '');
+    });
+
+    // initialize UI
+    updateAttemptUI(emailEl.value.trim().toLowerCase());
+  })();
+  </script>
+</body>
+</html>

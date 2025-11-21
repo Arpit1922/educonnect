@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>M.Tech — Course Details</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    /* Base */
+    :root{
+      --bg-a: #eef2f7;
+      --bg-b: #e8f0ea;
+      --accent: #2f6f61;
+      --muted: #5b6b6a;
+      --card: rgba(255,255,255,0.98);
+    }
+    html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:
+      linear-gradient(120deg, var(--bg-a) 0%, var(--bg-b) 100%); color:#173233;}
+
+    /* Centering */
+    .wrap { min-height:100vh; display:flex; align-items:center; justify-content:center; padding:30px; }
+
+    /* Card */
+    .card {
+      max-width:980px;
+      width:100%;
+      background: var(--card);
+      border-radius:14px;
+      padding:30px 34px;
+      box-shadow: 0 18px 50px rgba(16,40,34,0.08);
+      border: 1px solid rgba(47,111,97,0.06);
+      animation: rise .6s ease;
+    }
+    @keyframes rise {
+      from { opacity:0; transform: translateY(16px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    /* Header */
+    .head { display:flex; gap:18px; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; }
+    h1 { margin:0; font-size:28px; color:var(--accent); }
+    .subtitle { color:var(--muted); margin-top:8px; font-size:14px; }
+
+    .meta {
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .pill {
+      background: linear-gradient(90deg, rgba(47,111,97,0.06), rgba(47,111,97,0.02));
+      color:var(--accent);
+      padding:8px 12px; border-radius:999px; font-weight:600; font-size:13px; border:1px solid rgba(47,111,97,0.06);
+    }
+
+    /* Intro */
+    .intro { margin-top:14px; color:#274540; line-height:1.7; font-size:15px; }
+
+    /* Specs grid */
+    .specs { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:14px; margin-top:18px; }
+    .spec {
+      background:#fbfdfc; padding:14px; border-radius:10px; border:1px solid rgba(39,69,64,0.04);
+      box-shadow: 0 6px 18px rgba(25,50,44,0.03);
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .spec:hover { transform: translateY(-6px); box-shadow: 0 14px 40px rgba(25,50,44,0.06); }
+    .spec strong { color:var(--accent); display:block; margin-bottom:6px; }
+
+    /* Syllabus */
+    h2 { color:#173233; margin-top:22px; margin-bottom:8px; }
+    ul {
+      background:#fff; padding:14px 18px; border-radius:10px; border:1px solid rgba(23,50,51,0.03);
+      box-shadow: 0 6px 16px rgba(20,40,38,0.02); line-height:1.7; color:#284a48;
+    }
+
+    /* Actions */
+    .actions { margin-top:18px; display:flex; gap:12px; flex-wrap:wrap; align-items:center; }
+    .btn {
+      text-decoration:none; padding:11px 16px; border-radius:9px; font-weight:700; font-size:14px;
+      transition: transform .14s ease, box-shadow .14s ease;
+    }
+    .btn.primary { background:var(--accent); color:#fff; box-shadow: 0 8px 30px rgba(47,111,97,0.12); }
+    .btn.primary:hover { transform: translateY(-4px); box-shadow: 0 14px 44px rgba(47,111,97,0.16); }
+    .btn.ghost { background:transparent; border:1px solid rgba(39,69,64,0.08); color:var(--accent); }
+
+    /* Back link */
+    .back { display:inline-block; margin-top:20px; color:var(--accent); text-decoration:none; font-weight:700; }
+    .back:hover { text-decoration:underline; }
+
+    /* Responsive */
+    @media (max-width:720px) {
+      .card { padding:20px; }
+      h1 { font-size:22px; }
+      .intro { font-size:14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="head">
+        <div>
+          <h1>M.Tech — Master of Technology</h1>
+          <div class="subtitle">Advanced postgraduate program focused on specialised engineering topics, research, and thesis work.</div>
+        </div>
+
+        <div class="meta">
+          <div class="pill">Duration: 2 Years</div>
+          <div class="pill">Eligibility: B.Tech / B.E + GATE / Institute Entrance</div>
+        </div>
+      </div>
+
+      <p class="intro">
+        The <strong>M.Tech</strong> program offers in-depth knowledge and research opportunities in a chosen specialization (e.g., Computer Science, VLSI, AI, Cybersecurity).
+        It emphasises rigorous coursework, independent research, and a dissertation/project that prepares students for industry leadership or doctoral studies.
+      </p>
+
+      <h2>Course Specifications</h2>
+      <div class="specs">
+        <div class="spec">
+          <strong>Duration</strong>
+          <div>2 Years (4 Semesters)</div>
+        </div>
+
+        <div class="spec">
+          <strong>Specializations</strong>
+          <div>Computer Science, AI & ML, Cybersecurity, VLSI, Data Science, Networking</div>
+        </div>
+
+        <div class="spec">
+          <strong>Eligibility</strong>
+          <div>B.Tech / B.E in relevant discipline; GATE score or institute-specific entrance</div>
+        </div>
+
+        <div class="spec">
+          <strong>Intake</strong>
+          <div>Varies per department (e.g., 18 / 24 seats per specialization)</div>
+        </div>
+
+        <div class="spec">
+          <strong>Focus</strong>
+          <div>Advanced coursework, research methods, thesis/project, publication opportunities</div>
+        </div>
+
+        <div class="spec">
+          <strong>Career Paths</strong>
+          <div>Research Engineer, Senior Developer, R&D, PhD, Technical Lead</div>
+        </div>
+      </div>
+
+      <h2>Syllabus (High-level)</h2>
+      <ul>
+        <li><strong>Semester 1:</strong> Advanced core subjects, Research Methodology, Elective 1</li>
+        <li><strong>Semester 2:</strong> Specialization courses, Elective 2, Mini project</li>
+        <li><strong>Semester 3:</strong> Advanced seminars, thesis literature review, elective/project</li>
+        <li><strong>Semester 4:</strong> Major Thesis / Dissertation, Publication & Industry internship</li>
+      </ul>
+
+      <div class="actions">
+        <a class="btn primary" href="syllabus_mtech.pdf" download>📄 Download Syllabus (PDF)</a>
+        <a class="btn ghost" href="mailto:admissions@college.edu">✉️ Contact Department</a>
+        <a class="btn ghost" href="research_mtech.html">🔬 Research & Labs</a>
+      </div>
+
+      <a class="back" href="educourse.html">← Back to Course List</a>
+    </div>
+  </div>
+</body>
+</html>

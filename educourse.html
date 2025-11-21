@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduConnect Courses</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* Base */
+    :root {
+      --bg: #ffffff;
+      --fg: #222;
+      --primary: #007BFF;
+      --muted: #555;
+      --card-bg: #ffffff;
+      --footer-bg: #f1f5ff;
+    }
+
+    [data-theme="dark"] {
+      --bg: #121212;
+      --fg: #e6e6e6;
+      --primary: #4aa3ff;
+      --muted: #9aa6bd;
+      --card-bg: #1c1c1c;
+      --footer-bg: #071022;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: var(--bg);
+      color: var(--fg);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Header */
+    header {
+      background-color: var(--primary);
+      color: white;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    header h1 { font-size: 22px; }
+
+    .top-links {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+
+    .top-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: opacity 0.3s;
+    }
+
+    .top-links a:hover { opacity: 0.8; }
+
+    /* Theme toggle */
+    #theme-toggle {
+      background: white;
+      color: var(--primary);
+      border: none;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    #theme-toggle:hover {
+      background: #0056b3;
+      color: white;
+    }
+
+    /* Main */
+    main {
+      flex: 1;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h2 {
+      color: var(--primary);
+      font-size: 24px;
+      margin-bottom: 25px;
+    }
+
+    .courses {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 25px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .course-card {
+      background: var(--card-bg);
+      border: 2px solid rgba(227,233,240,0.9);
+      border-radius: 12px;
+      padding: 25px 15px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      transition: transform 0.3s, box-shadow 0.3s;
+      text-align: left;
+    }
+
+    .course-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.1);
+    }
+
+    .course-card i {
+      font-size: 28px;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .course-card h3 {
+      margin: 10px 0 6px;
+      color: #003f88;
+      font-size: 18px;
+    }
+
+    .course-card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .course-card a {
+      display: inline-block;
+      text-decoration: none;
+      background-color: var(--primary);
+      color: white;
+      padding: 8px 14px;
+      border-radius: 6px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    .course-card a:hover {
+      background-color: #0056b3;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--primary);
+      color: white;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      margin: 40px auto 20px;
+      text-decoration: none;
+      transition: background 0.3s;
+    }
+
+    .back-btn:hover { background-color: #0056b3; }
+
+    /* Footer */
+    footer {
+      background-color: var(--footer-bg);
+      color: #333;
+      text-align: center;
+      padding: 15px;
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 700px) {
+      header { padding: 12px; }
+      h2 { font-size: 20px; }
+      .courses { gap: 18px; }
+      .course-card { padding: 18px 12px; }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>EduConnect</h1>
+
+    <div class="top-links">
+      <button id="theme-toggle" aria-pressed="false">🌙 Dark Mode</button>
+      <a href="homepage.html">Home</a>
+      <a href="eduform.html">Register</a>
+      <a href="edulogin.html">Login</a>
+    </div>
+  </header>
+
+  <main>
+    <h2>Available Courses</h2>
+
+    <div class="courses" id="courses">
+      <div class="course-card">
+        <i class="fa-solid fa-laptop-code"></i>
+        <h3>MCA</h3>
+        <p>Master of Computer Applications</p>
+        <a href="mca.html">View</a>
+      </div>
+
+      <div class="course-card">
+        <i class="fa-solid fa-building-columns"></i>
+        <h3>MBA</h3>
+        <p>Master of Business Administration</p>
+        <a href="mba.html">View</a>
+      </div>
+
+      <div class="course-card">
+        <i class="fa-solid fa-microchip"></i>
+        <h3>B.Tech (CSE)</h3>
+        <p>Computer Science & Engineering</p>
+        <a href="btech_cse.html">View</a>
+      </div>
+
+      <div class="course-card">
+        <i class="fa-solid fa-desktop"></i>
+        <h3>B.Tech (CSE/IT)</h3>
+        <p>Computer Science & Information Technology</p>
+        <a href="btech_cseit.html">View</a>
+      </div>
+
+      <div class="course-card">
+        <i class="fa-solid fa-robot"></i>
+        <h3>B.Tech (AI/ML)</h3>
+        <p>Artificial Intelligence & Machine Learning</p>
+        <a href="btech_aiml.html">View</a>
+      </div>
+
+      <div class="course-card">
+        <i class="fa-solid fa-gears"></i>
+        <h3>M.Tech</h3>
+        <p>Master of Technology</p>
+        <a href="mtech.html">View</a>
+      </div>
+    </div>
+
+    <a href="index.html" class="back-btn" aria-label="Back to Homepage">
+      <i class="fa-solid fa-arrow-left" style="margin-right:8px;"></i>Back to Homepage
+    </a>
+  </main>
+
+  <footer>© 2025 EduConnect. All rights reserved.</footer>
+
+  <script>
+    // Theme toggle: remembers choice using localStorage and uses data-theme for CSS vars
+    (function () {
+      const toggle = document.getElementById('theme-toggle');
+      const applyTheme = (t) => {
+        if (t === 'dark') {
+          document.documentElement.setAttribute('data-theme', 'dark');
+          toggle.textContent = '☀️ Light Mode';
+          toggle.setAttribute('aria-pressed', 'true');
+        } else {
+          document.documentElement.removeAttribute('data-theme');
+          toggle.textContent = '🌙 Dark Mode';
+          toggle.setAttribute('aria-pressed', 'false');
+        }
+        try { localStorage.setItem('edu_theme', t); } catch (e) { /* ignore */ }
+      };
+
+      // initialize
+      let saved = null;
+      try { saved = localStorage.getItem('edu_theme'); } catch (e) { /* ignore */ }
+      if (saved === 'dark' || saved === 'light') {
+        applyTheme(saved);
+      } else {
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        applyTheme(prefersDark ? 'dark' : 'light');
+      }
+
+      toggle.addEventListener('click', () => {
+        const cur = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+        applyTheme(cur === 'dark' ? 'light' : 'dark');
+      });
+    })();
+  </script>
+</body>
+</html>
