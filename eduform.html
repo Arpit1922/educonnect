@@ -7,49 +7,28 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
     :root{
-      --brand:#004ad0;
-      --bg:#f2f5f7;
-      --card:#ffffff;
-      --text:#222;
-      --muted:#666;
-      --success:#198754;
-      --error:#d93025;
+      --brand:#004ad0; --bg:#f2f5f7; --card:#fff; --text:#222; --muted:#666; --success:#198754; --error:#d93025;
     }
     *{box-sizing:border-box}
-    body{
-      margin:0;font-family:Poppins, Inter, system-ui, -apple-system, Arial, sans-serif;
-      background:var(--bg);color:var(--text);transition:background .3s,color .3s;
-      -webkit-font-smoothing:antialiased;
-    }
-    body.dark{
-      --bg:#0f1113; --card:#141618; --text:#e6eef8; --muted:#9aa4b2; --brand:#3a82ff;
-    }
+    body{ margin:0; font-family:Poppins,Inter,Arial; background:var(--bg); color:var(--text); }
+    body.dark{ --bg:#0f1113; --card:#141618; --text:#e6eef8; --muted:#9aa4b2; --brand:#3a82ff; }
     header{ background:var(--brand); color:#fff; padding:18px 16px; position:relative; text-align:center;}
-    .theme-toggle{ position:absolute; right:14px; top:10px; border:0; background:transparent; color:#fff; padding:8px; cursor:pointer; font-weight:600; border-radius:8px;}
-    main{ display:flex; align-items:flex-start; justify-content:center; padding:30px 16px; min-height:60vh; }
+    .theme-toggle{ position:absolute; right:14px; top:10px; background:transparent; color:#fff; border:0; padding:8px; cursor:pointer; border-radius:8px;}
+    main{ display:flex; justify-content:center; padding:30px 16px; min-height:60vh; }
     .card{ width:100%; max-width:920px; background:var(--card); padding:22px; border-radius:12px; box-shadow:0 8px 24px rgba(10,10,10,0.06); }
     .grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:12px; }
     @media(max-width:820px){ .grid{ grid-template-columns:1fr } }
-    label{ display:block; font-size:0.9rem; margin-bottom:6px; font-weight:600; color:var(--text); }
+    label{ display:block; font-size:0.9rem; margin-bottom:6px; font-weight:600; }
     input, select, button { font-family:inherit; }
-    input[type=text], input[type=email], input[type=tel], input[type=date], input[type=password], select {
-      width:100%; padding:10px; border:1px solid #cfcfcf; border-radius:8px; background:transparent; color:inherit;
-    }
-    body.dark input, body.dark select{ border-color:#2c2f33; }
+    input, select { width:100%; padding:10px; border:1px solid #cfcfcf; border-radius:8px; background:transparent; color:inherit; }
     .small{ padding:8px 10px; font-weight:600; border-radius:8px; border:none; background:var(--brand); color:#fff; cursor:pointer;}
-    .small:disabled{ opacity:.6; cursor:not-allowed; }
-    .helper{ font-size:0.85rem; color:var(--muted); margin-top:6px; }
     .msg{ font-size:0.9rem; margin-top:6px; min-height:1.1em; }
-    .msg.success{ color:var(--success); }
-    .msg.error{ color:var(--error); }
+    .msg.success{ color:var(--success); } .msg.error{ color:var(--error); }
     .actions{ display:flex; gap:12px; justify-content:flex-end; margin-top:12px; }
     footer{ background:#222; color:#fff; text-align:center; padding:18px; margin-top:30px; }
-    .full{ grid-column:1/-1; }
-    .pw-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
-    @media(max-width:600px){ .pw-row{ grid-template-columns:1fr } }
+    .full{ grid-column:1/-1; } .pw-row{ display:grid; grid-template-columns:1fr 1fr; gap:12px; }
     .controls-row{ display:flex; gap:8px; align-items:center; }
     .hidden{ display:none !important; }
-    .center{ text-align:center; }
   </style>
 </head>
 
@@ -61,11 +40,10 @@
 
   <main>
     <div class="card" id="cardRoot">
-      <!-- If logged in, we'll show a message; otherwise show the form -->
       <div id="loggedInBox" class="hidden">
         <p id="loggedInMsg" class="msg success"></p>
         <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:12px;">
-          <a href="homepage.html" class="small" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Go to Homepage</a>
+          <a href="index.html" class="small" style="text-decoration:none;display:inline-flex;align-items:center;justify-content:center;">Go to Homepage</a>
           <button id="logoutBtn" class="small" style="background:#d9534f;">Logout</button>
         </div>
       </div>
@@ -88,10 +66,7 @@
             <div>
               <label for="gender">Gender *</label>
               <select id="gender" name="gender" required>
-                <option value="">Select gender</option>
-                <option>Male</option>
-                <option>Female</option>
-                <option>Other</option>
+                <option value="">Select gender</option><option>Male</option><option>Female</option><option>Other</option>
               </select>
               <div id="genderMsg" class="msg" aria-live="polite"></div>
             </div>
@@ -99,12 +74,7 @@
             <div>
               <label for="course">Course / Branch *</label>
               <select id="course" name="course" required>
-                <option value="">Select course</option>
-                <option>B.Tech</option>
-                <option>MCA</option>
-                <option>MBA</option>
-                <option>B.Pharma</option>
-                <option>Others</option>
+                <option value="">Select course</option><option>B.Tech</option><option>MCA</option><option>MBA</option><option>B.Pharma</option><option>Others</option>
               </select>
               <div id="courseMsg" class="msg" aria-live="polite"></div>
             </div>
@@ -136,9 +106,7 @@
             <div>
               <label for="admissionCategory">Admission Category *</label>
               <select id="admissionCategory" name="admissionCategory" required>
-                <option value="">Select admission type</option>
-                <option>Direct</option>
-                <option>Counselling</option>
+                <option value="">Select admission type</option><option>Direct</option><option>Counselling</option>
               </select>
               <div id="admissionMsg" class="msg" aria-live="polite"></div>
             </div>
@@ -172,7 +140,6 @@
               </div>
             </div>
 
-            <!-- Email OTP -->
             <div class="full">
               <label>Verify Email (OTP)</label>
               <div class="controls-row">
@@ -183,7 +150,6 @@
               <div id="otpEmailMsg" class="msg" aria-live="polite"></div>
             </div>
 
-            <!-- Phone OTP -->
             <div class="full">
               <label>Verify Phone (OTP)</label>
               <div class="controls-row">
@@ -212,13 +178,67 @@
     <p style="margin:0">&copy; 2025 EduConnect. All rights reserved.</p>
   </footer>
 
+  <!-- Firebase init: create user + store profile -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, updateProfile, signOut as fbSignOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+    import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBKHZ-5hboMmIDPM6EsX-mRwcLjkoiK3Ss",
+      authDomain: "edu-connect-fa471.firebaseapp.com",
+      projectId: "edu-connect-fa471",
+      storageBucket: "edu-connect-fa471.firebasestorage.app",
+      messagingSenderId: "2947013382",
+      appId: "1:2947013382:web:c1753e62973b0c3ee05c87"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.createFirebaseUserAndProfile = async ({ email, password, displayName, profileObj }) => {
+      try {
+        const cred = await createUserWithEmailAndPassword(auth, email, password);
+        const user = cred.user;
+        if (displayName) {
+          try { await updateProfile(user, { displayName }); } catch(e){ }
+        }
+        try {
+          await setDoc(doc(db, 'users', user.uid), Object.assign({}, profileObj, { email: user.email, createdAt: new Date().toISOString() }));
+        } catch(fireErr){
+          return { success: true, firebaseUser: user, firestoreError: String(fireErr) };
+        }
+        return { success: true, firebaseUser: user };
+      } catch(err){
+        return { success: false, error: String(err) };
+      }
+    };
+
+    window.firebaseSignOut = async ()=>{ try{ await fbSignOut(auth); }catch(e){} };
+
+    onAuthStateChanged(auth, (user) => {
+      try {
+        const formArea = document.getElementById('formArea');
+        const loggedBox = document.getElementById('loggedInBox');
+        const loggedInMsg = document.getElementById('loggedInMsg');
+        if (user) {
+          if (formArea) formArea.classList.add('hidden');
+          if (loggedBox) loggedBox.classList.remove('hidden');
+          if (loggedInMsg) loggedInMsg.textContent = `You are signed in as ${user.email}.`;
+        } else {
+          if (formArea) formArea.classList.remove('hidden');
+          if (loggedBox) loggedBox.classList.add('hidden');
+        }
+      } catch(e){}
+    });
+  </script>
+
   <script>
   (function(){
-    const API_BASE = '/edu_connect/api.php';
     const toggle = document.getElementById('toggleTheme');
     const savedTheme = localStorage.getItem('edu_theme');
     const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
     function applyTheme(theme){
       if(theme === 'dark') document.body.classList.add('dark');
       else document.body.classList.remove('dark');
@@ -235,19 +255,15 @@
     const form = document.getElementById('regForm');
     const formMsg = document.getElementById('formMsg');
     const resetBtn = document.getElementById('resetBtn');
-
+    const logoutBtn = document.getElementById('logoutBtn');
     const state = { emailOtp:null, phoneOtp:null, emailVerified:false, phoneVerified:false };
 
-    // Input helpers
-    const ids = ['name','dob','gender','course','email','phone','father','mother','admissionCategory','rollNo','section','blood','password','confirmPassword'];
     function $(id){ return document.getElementById(id); }
     function showMsg(el, text, type){ if(!el) return; el.textContent = text || ''; el.className = 'msg ' + (type||''); }
     function clearFieldMsgs(){ const toClear = ['nameMsg','dobMsg','genderMsg','emailMsg','phoneMsg','fatherMsg','motherMsg','courseMsg','admissionMsg','otpEmailMsg','otpPhoneMsg','passwordMsg','confirmPasswordMsg','formMsg']; toClear.forEach(id=>{ const el=document.getElementById(id); if(el){ el.textContent=''; el.className='msg'; }}); }
 
-    // OTP simulation helpers
     function randomOtp(){ return String(Math.floor(100000 + Math.random() * 900000)); }
 
-    // Email OTP
     $('genEmailOtp').addEventListener('click', ()=>{
       const email = $('email').value.trim();
       if(!validateEmail(email)){ showMsg($('emailMsg'),'Enter a valid email before generating OTP','error'); return; }
@@ -260,7 +276,6 @@
       else showMsg($('otpEmailMsg'),'Incorrect OTP','error');
     });
 
-    // Phone OTP
     $('genPhoneOtp').addEventListener('click', ()=>{
       const phone = $('phone').value.trim();
       if(!validatePhone(phone)){ showMsg($('phoneMsg'),'Enter a valid 10-digit phone before generating OTP','error'); return; }
@@ -273,80 +288,19 @@
       else showMsg($('otpPhoneMsg'),'Incorrect OTP','error');
     });
 
-    // Basic validators
     function validateEmail(e){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e); }
     function validatePhone(p){ return /^[0-9]{10}$/.test(p); }
 
-    // Register & login helpers
-    async function registerApi(payload){
-      try{
-        const res = await fetch(API_BASE + '?route=register', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          credentials: 'same-origin',
-          body: JSON.stringify(payload)
-        });
-        const json = await res.json().catch(()=>null);
-        return { status: res.status, ok: res.ok, json };
-      }catch(err){
-        return { error: String(err) };
-      }
-    }
-    async function loginApi(payload){
-      try{
-        const res = await fetch(API_BASE + '?route=login', {
-          method: 'POST',
-          headers: {'Content-Type':'application/json'},
-          credentials: 'same-origin',
-          body: JSON.stringify(payload)
-        });
-        const json = await res.json().catch(()=>null);
-        return { status: res.status, ok: res.ok, json };
-      }catch(err){
-        return { error: String(err) };
-      }
-    }
-
-    // Check session (show logged-in state)
-    async function checkSession(){
-      try{
-        const res = await fetch(API_BASE + '?route=me', { credentials: 'same-origin' });
-        const j = await res.json().catch(()=>null);
-        if(j && j.success){
-          // hide form and show logged-in box
-          document.getElementById('formArea').classList.add('hidden');
-          const loggedBox = document.getElementById('loggedInBox');
-          loggedBox.classList.remove('hidden');
-          $('loggedInMsg').textContent = `You are already logged in as ${j.data.full_name || j.data.email}.`;
-          return true;
-        } else {
-          // ensure form visible
-          document.getElementById('formArea').classList.remove('hidden');
-          document.getElementById('loggedInBox').classList.add('hidden');
-          return false;
-        }
-      }catch(err){
-        // network error -> keep form visible
-        return false;
-      }
-    }
-
-    // Logout button
-    $('logoutBtn').addEventListener('click', async ()=>{
-      try{
-        await fetch(API_BASE + '?route=logout', { method:'POST', credentials:'same-origin' });
-      }catch(e){}
-      // just refresh UI
+    logoutBtn.addEventListener('click', async ()=>{
+      if(window.firebaseSignOut) await window.firebaseSignOut();
       location.reload();
     });
 
-    // Form submit
     form.addEventListener('submit', async (ev)=>{
       ev.preventDefault();
       clearFieldMsgs();
       showMsg(formMsg,'','');
 
-      // collect inputs
       const name = $('name').value.trim();
       const dob = $('dob').value;
       const gender = $('gender').value;
@@ -379,55 +333,28 @@
 
       if(!ok){ showMsg(formMsg,'Please fix errors and try again','error'); return; }
 
-      // send register request
-      showMsg(formMsg,'Registering…');
-      const regPayload = { email, password, full_name: name };
-      const regResult = await registerApi(regPayload);
-      if(regResult.error){
-        showMsg(formMsg,'Network or server error during registration: ' + regResult.error,'error');
-        return;
+      showMsg(formMsg,'Creating account…');
+      const profileObj = { full_name: name, dob, gender, course, phone, father, mother, admission, rollNo, section, blood };
+      try {
+        const fbRes = await window.createFirebaseUserAndProfile({ email, password, displayName: name, profileObj });
+        if(!fbRes || !fbRes.success){
+          const err = fbRes && fbRes.error ? fbRes.error : 'Unknown Firebase error';
+          showMsg(formMsg, 'Firebase signup failed: ' + err, 'error');
+          return;
+        }
+        showMsg(formMsg, 'Registration successful ✅ — redirecting to homepage…', 'success');
+        setTimeout(()=>{ window.location.href = 'index.html'; }, 900);
+      } catch (e){
+        showMsg(formMsg, 'Registration error: ' + String(e), 'error');
       }
-      if(!regResult.json){
-        showMsg(formMsg,'Server returned non-JSON response. Check api_debug.log','error');
-        return;
-      }
-      if(!regResult.json.success){
-        showMsg(formMsg, regResult.json.error || 'Registration failed','error');
-        return;
-      }
-
-      // on success, server auto-logged (api sets session). But to be safe, call login endpoint to ensure session cookie set.
-      const loginResult = await loginApi({ email, password });
-      if(loginResult.error){
-        showMsg(formMsg,'Registered but login failed (network): ' + loginResult.error,'error');
-        return;
-      }
-      if(!loginResult.json || !loginResult.json.success){
-        // registration succeeded but login failed - show message but let them login manually
-        showMsg(formMsg, 'Registered but login failed: ' + (loginResult.json && loginResult.json.error ? loginResult.json.error : 'unknown'),'error');
-        return;
-      }
-
-      // Save profile locally (placeholder) — change to server-side when you add profile endpoint
-      const profile = { name,dob,gender,course,email,phone,father,mother,admission,rollNo,section,blood,created_at:new Date().toISOString() };
-      try{ localStorage.setItem('edu_profile_' + email, JSON.stringify(profile)); }catch(e){ /* ignore */ }
-
-      showMsg(formMsg,'Registration successful ✅ — you are now logged in. Redirecting…','success');
-      setTimeout(()=>{ window.location.href = '/edu_connect/homepage.html'; }, 900);
     });
 
-    // Reset
     resetBtn.addEventListener('click', ()=>{
       form.reset();
       state.emailOtp = state.phoneOtp = null;
       state.emailVerified = state.phoneVerified = false;
       clearFieldMsgs();
     });
-
-    // init - check if already logged in
-    (async function init(){
-      await checkSession();
-    })();
   })();
   </script>
 </body>
