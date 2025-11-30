@@ -73,7 +73,7 @@
     .message.error{ color:var(--error); }
     .message.success{ color:var(--success); }
     .extra-links{ text-align:center; margin-top:12px; }
-    .extra-links a{ color:var(--brand); text-decoration:none; }
+    .extra-links a{ color:var(--brand); text-decoration:none; cursor:pointer; }
     footer{ background:#222; color:#fff; text-align:center; padding:16px 8px; margin-top:28px; }
     @media(max-width:420px){ .card{ padding:18px; } .theme-toggle{ top:8px; right:10px; padding:6px 8px; } }
   </style>
@@ -112,7 +112,7 @@
 
       <div class="extra-links" style="margin-top:10px;">
         <p><a href="#" id="forgotLink">Forgot Password?</a></p>
-        <p>Don't have an account? <a href="eduform.html">Sign Up Here</a></p>
+        <p>Don't have an account? <a href="registration.html">Sign Up Here</a></p>
       </div>
 
       <p id="formMsg" class="message" aria-live="polite"></p>
@@ -124,14 +124,29 @@
     <p style="margin:0">&copy; 2025 EduConnect. All rights reserved.</p>
   </footer>
 
-  <script>
-  (function(){
-    const API_BASE = '/edu_connect/api.php';
+  <!-- All Firebase + DOM logic in one module so functions are available -->
+  <script type="module">
+    // Firebase imports (modular v12)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+
+    // Corrected Firebase config (storageBucket uses appspot.com)
+    const firebaseConfig = {
+      apiKey: "AIzaSyBKHZ-5hboMmIDPM6EsX-mRwcLjkoiK3Ss",
+      authDomain: "edu-connect-fa471.firebaseapp.com",
+      projectId: "edu-connect-fa471",
+      storageBucket: "edu-connect-fa471.appspot.com",
+      messagingSenderId: "2947013382",
+      appId: "1:2947013382:web:c1753e62973b0c3ee05c87"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // DOM elements
     const THEME_KEY = 'edu_theme';
     const REMEMBER_KEY = 'edu_remember_user';
-    const LOCK_KEY = 'edu_lock_info';
 
-    // elements
     const themeToggle = document.getElementById('themeToggle');
     const body = document.body;
     const form = document.getElementById('loginForm');
@@ -144,8 +159,9 @@
     const pwMsg = document.getElementById('pwMsg');
     const formMsg = document.getElementById('formMsg');
     const attemptMsg = document.getElementById('attemptMsg');
+    const forgotLink = document.getElementById('forgotLink');
 
-    // ---------- theme ----------
+    // Theme logic
     function applyTheme(theme){
       if(theme === 'dark'){ body.classList.add('dark'); themeToggle.textContent = '☀️ Light'; themeToggle.setAttribute('aria-pressed','true'); }
       else { body.classList.remove('dark'); themeToggle.textContent = '🌙 Dark'; themeToggle.setAttribute('aria-pressed','false'); }
@@ -159,7 +175,7 @@
       localStorage.setItem(THEME_KEY, isDark ? 'dark' : 'light');
     });
 
-    // ---------- password toggle ----------
+    // Password toggle
     togglePw.addEventListener('click', () => {
       const isPwd = passwordEl.type === 'password';
       passwordEl.type = isPwd ? 'text' : 'password';
@@ -167,7 +183,7 @@
       togglePw.setAttribute('aria-pressed', String(isPwd));
     });
 
-    // ---------- remember me ----------
+    // Remember me load/save
     (function loadRemember(){
       const saved = localStorage.getItem(REMEMBER_KEY);
       if(saved){
@@ -175,13 +191,13 @@
         rememberEl.checked = true;
       }
     })();
-
     function saveRemember(){
       if(rememberEl.checked) localStorage.setItem(REMEMBER_KEY, emailEl.value);
       else localStorage.removeItem(REMEMBER_KEY);
     }
 
-    // ---------- lock/attempts (local) ----------
+    // Lock/attempt tracking (local)
+    const LOCK_KEY = 'edu_lock_info';
     function getLockInfo(){ try{ return JSON.parse(localStorage.getItem(LOCK_KEY) || '{}'); }catch{ return {}; } }
     function setLockInfo(obj){ localStorage.setItem(LOCK_KEY, JSON.stringify(obj)); }
     function recordFailedAttempt(email){
@@ -228,14 +244,33 @@
         return false;
       }
     }
-
     emailEl.addEventListener('input', () => updateAttemptUI(emailEl.value.trim().toLowerCase()));
 
-    // ---------- helpers ----------
+    // Helpers
     function show(el, text, type){ el.textContent = text || ''; el.className = 'message ' + (type||''); }
     function isEmail(val){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val); }
 
-    // ---------- form submit: call API ----------
+    // Firebase login function (module-local)
+    async function firebaseLogin(email, password){
+      try{
+        const cred = await signInWithEmailAndPassword(auth, email, password);
+        return { success:true, user:cred.user };
+      } catch(err){
+        return { success:false, error:err };
+      }
+    }
+
+    // Firebase password reset
+    async function sendReset(email){
+      try{
+        await sendPasswordResetEmail(auth, email);
+        return { success:true };
+      } catch(err){
+        return { success:false, error:err };
+      }
+    }
+
+    // Form submit
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       show(userMsg,''); show(pwMsg,''); show(formMsg,'');
@@ -243,57 +278,53 @@
       const password = passwordEl.value;
 
       if(!email){ show(userMsg,'Please enter your registered email.','error'); emailEl.focus(); return; }
-      if(!isEmail(email)){ show(userMsg,'Please enter a valid email address (registered email).','error'); emailEl.focus(); return; }
+      if(!isEmail(email)){ show(userMsg,'Please enter a valid email address.','error'); emailEl.focus(); return; }
       if(!password || password.length < 6){ show(pwMsg,'Password must be at least 6 characters.','error'); passwordEl.focus(); return; }
 
       if(updateAttemptUI(email)) return; // locked
 
       try{
         show(formMsg,'Logging in…','');
-        const res = await fetch(API_BASE + '?route=login', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: {'Content-Type':'application/json'},
-          body: JSON.stringify({ email: email, password: password })
-        });
-
-        const j = await res.json().catch(()=>null);
-        if(!j){
-          show(formMsg,'Server did not respond with JSON. Try again later.','error');
-          return;
-        }
-
-        if(j.success){
-          // success -> clear attempts, save remember and redirect
+        const res = await firebaseLogin(email, password);
+        if(res.success){
           resetAttempts(email);
           saveRemember();
+          // store user email for dashboard
+          try{ localStorage.setItem('edu_user_email', email); }catch(e){}
           show(formMsg,'Login successful ✅ Redirecting…','success');
-          setTimeout(()=>{ window.location.href = '/edu_connect/homepage.html'; }, 700);
+          // redirect to dashboard
+          setTimeout(()=>{ window.location.href = 'dashboard.html'; }, 700);
+          return;
         } else {
-          // login failed
-          if(res.status === 401){
-            recordFailedAttempt(email);
-            updateAttemptUI(email);
-            show(formMsg, j.error || 'Invalid credentials', 'error');
-          } else {
-            // other server error
-            show(formMsg, j.error || 'Login failed', 'error');
-          }
+          const errmsg = res.error && res.error.message ? res.error.message : String(res.error || 'Login failed');
+          recordFailedAttempt(email);
+          updateAttemptUI(email);
+          show(formMsg, errmsg, 'error');
+          return;
         }
       }catch(err){
         console.error(err);
-        show(formMsg,'Network or server error. Check console.','error');
+        recordFailedAttempt(email);
+        updateAttemptUI(email);
+        show(formMsg, (err && err.message) ? err.message : String(err), 'error');
       }
     });
 
-    document.getElementById('forgotLink').addEventListener('click', (ev) => {
+    // Forgot password flow
+    forgotLink.addEventListener('click', async (ev) => {
       ev.preventDefault();
-      show(formMsg, 'Forgot password flow requires server-side reset email. Implement endpoint to support it.', '');
+      show(formMsg,'','');
+      const email = emailEl.value.trim().toLowerCase();
+      if(!email){ show(formMsg,'Enter your registered email first to receive a reset link.','error'); return; }
+      if(!isEmail(email)){ show(formMsg,'Enter a valid email address.','error'); return; }
+      show(formMsg,'Sending password reset email…','');
+      const r = await sendReset(email);
+      if(r.success){ show(formMsg,'Password reset email sent. Check your inbox.','success'); }
+      else { show(formMsg, (r.error && r.error.message) ? r.error.message : 'Unable to send reset email', 'error'); }
     });
 
-    // initialize UI
-    updateAttemptUI(emailEl.value.trim().toLowerCase());
-  })();
+    // NOTE: we intentionally do NOT auto-redirect on page load. This keeps the login form visible
+    // even if a Firebase session exists (so tests and development are predictable).
   </script>
 </body>
 </html>
