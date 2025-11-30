@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EduConnect — Student Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --brand:#004ad0; --bg:#f2f5f7; --card:#fff; --muted:#6b7280; --text:#111827;
+      --accent:#0ea5a4; --danger:#ef4444;
+    }
+    *{box-sizing:border-box}
+    body{ margin:0; font-family:Poppins,Inter,Arial; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; }
+    body.dark{ background:#0b0f12; color:#e6eef8; --card:#111214; --muted:#9aa4b2; --brand:#3a82ff; }
+    header{ background:var(--brand); color:#fff; padding:16px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px; }
+    header h1{ margin:0; font-size:1.05rem; font-weight:600; }
+    .controls{ display:flex; gap:10px; align-items:center; }
+    .theme-btn, .logout-btn{ background:transparent; border:1px solid rgba(255,255,255,0.12); color:#fff; padding:8px 10px; border-radius:8px; cursor:pointer; font-weight:600; }
+    main{ padding:22px; display:grid; grid-template-columns: 320px 1fr; gap:20px; max-width:1200px; margin:24px auto; }
+    @media(max-width:980px){ main{ grid-template-columns: 1fr; padding:16px } }
+    .card{ background:var(--card); padding:16px; border-radius:10px; box-shadow:0 8px 20px rgba(10,10,10,0.06); }
+    .profile { display:flex; gap:14px; align-items:center; }
+    .avatar{ width:74px; height:74px; border-radius:12px; background:linear-gradient(135deg,#94c9ff,#cbe9ff); display:flex; align-items:center; justify-content:center; font-weight:700; color:#03306d; font-size:20px; }
+    .p-info h2{ margin:0; font-size:1.05rem; }
+    .p-info p{ margin:6px 0 0; color:var(--muted); font-size:0.9rem; }
+    .profile-grid{ margin-top:12px; display:grid; gap:8px; grid-template-columns:1fr 1fr; }
+    .field{ font-size:0.9rem; color:var(--muted); }
+    .section-title{ font-weight:700; margin-bottom:10px; }
+    .stats{ display:flex; gap:10px; margin-top:12px; }
+    .stat{ flex:1; padding:10px; border-radius:8px; background: linear-gradient(180deg,#f8fafc,#fff); text-align:center; }
+    .assignments-list{ display:flex; flex-direction:column; gap:12px; margin-top:6px; }
+    .assignment{ border:1px solid #e6eef7; padding:12px; border-radius:8px; display:flex; justify-content:space-between; gap:12px; align-items:flex-start; background:transparent; }
+    .assignment .left{ max-width:70%; }
+    .assignment h4{ margin:0 0 6px; font-size:0.98rem; }
+    .assignment p{ margin:0; color:var(--muted); font-size:0.9rem; }
+    .meta{ font-size:0.82rem; color:var(--muted); margin-top:8px; }
+    .btn{ padding:8px 10px; border-radius:8px; border:none; cursor:pointer; font-weight:700; }
+    .btn.complete{ background:var(--accent); color:#fff; }
+    .btn.disabled{ opacity:0.6; cursor:not-allowed; }
+    .empty{ color:var(--muted); font-style:italic; }
+    .loader{ text-align:center; padding:20px 0; color:var(--muted); }
+    footer{ text-align:center; color:var(--muted); font-size:0.9rem; margin:28px 0; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>EduConnect — Student Dashboard</h1>
+    <div class="controls">
+      <button id="toggleTheme" class="theme-btn" aria-label="Toggle theme">🌙 Theme</button>
+      <button id="logoutBtn" class="logout-btn">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- LEFT: Profile & course -->
+    <aside class="card" id="leftCol">
+      <div class="profile" id="profileRoot">
+        <div class="avatar" id="avatar">--</div>
+        <div class="p-info">
+          <h2 id="pName">Loading...</h2>
+          <p id="pEmail"></p>
+        </div>
+      </div>
+
+      <div style="margin-top:14px;">
+        <div class="section-title">Personal Information</div>
+        <div class="profile-grid">
+          <div>
+            <div class="field">Phone</div>
+            <div id="pPhone">—</div>
+          </div>
+          <div>
+            <div class="field">DOB</div>
+            <div id="pDob">—</div>
+          </div>
+          <div>
+            <div class="field">Course</div>
+            <div id="pCourse">—</div>
+          </div>
+          <div>
+            <div class="field">Section</div>
+            <div id="pSection">—</div>
+          </div>
+          <div>
+            <div class="field">Roll No.</div>
+            <div id="pRoll">—</div>
+          </div>
+          <div>
+            <div class="field">Blood Group</div>
+            <div id="pBlood">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div class="section-title">Parents</div>
+        <div class="profile-grid">
+          <div>
+            <div class="field">Father</div>
+            <div id="pFather">—</div>
+          </div>
+          <div>
+            <div class="field">Mother</div>
+            <div id="pMother">—</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top:16px;">
+        <div class="section-title">Summary</div>
+        <div class="stats">
+          <div class="stat">
+            <div style="font-size:0.85rem;color:var(--muted)">Pending</div>
+            <div id="statPending" style="font-size:1.15rem;font-weight:700">—</div>
+          </div>
+          <div class="stat">
+            <div style="font-size:0.85rem;color:var(--muted)">Course</div>
+            <div id="statCourse" style="font-size:1.15rem;font-weight:700">—</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- RIGHT: Assignments & details -->
+    <section class="card" id="rightCol">
+      <div style="display:flex;align-items:center;justify-content:space-between;">
+        <div>
+          <div class="section-title">Pending Assignments</div>
+          <div style="color:var(--muted);font-size:0.95rem">Assignments assigned to you that are still pending.</div>
+        </div>
+        <div id="refreshWrap"><button id="refreshBtn" class="btn" style="background:#eef2ff;border:1px solid #e0e7ff;">Refresh</button></div>
+      </div>
+
+      <div id="assignmentsRoot" class="assignments-list" style="margin-top:12px;">
+        <div class="loader">Loading assignments…</div>
+      </div>
+
+      <div style="margin-top:20px;">
+        <div class="section-title">Course / Notifications</div>
+        <div id="courseNotes" style="color:var(--muted)">No course notifications.</div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 EduConnect — Student Dashboard
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, collection, query, where, getDocs, updateDoc, orderBy } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+    // Use the same corrected config you used on the login page
+    const firebaseConfig = {
+      apiKey: "AIzaSyBKHZ-5hboMmIDPM6EsX-mRwcLjkoiK3Ss",
+      authDomain: "edu-connect-fa471.firebaseapp.com",
+      projectId: "edu-connect-fa471",
+      storageBucket: "edu-connect-fa471.appspot.com",
+      messagingSenderId: "2947013382",
+      appId: "1:2947013382:web:c1753e62973b0c3ee05c87"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    // UI refs
+    const pName = document.getElementById('pName');
+    const pEmail = document.getElementById('pEmail');
+    const pPhone = document.getElementById('pPhone');
+    const pDob = document.getElementById('pDob');
+    const pCourse = document.getElementById('pCourse');
+    const pSection = document.getElementById('pSection');
+    const pRoll = document.getElementById('pRoll');
+    const pBlood = document.getElementById('pBlood');
+    const pFather = document.getElementById('pFather');
+    const pMother = document.getElementById('pMother');
+    const avatar = document.getElementById('avatar');
+    const statPending = document.getElementById('statPending');
+    const statCourse = document.getElementById('statCourse');
+    const assignmentsRoot = document.getElementById('assignmentsRoot');
+    const courseNotes = document.getElementById('courseNotes');
+    const refreshBtn = document.getElementById('refreshBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const toggleTheme = document.getElementById('toggleTheme');
+
+    // theme
+    const saved = localStorage.getItem('edu_theme');
+    if(saved === 'dark') document.body.classList.add('dark');
+    toggleTheme.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      localStorage.setItem('edu_theme', isDark ? 'dark' : 'light');
+      toggleTheme.textContent = isDark ? '☀️ Light' : '🌙 Theme';
+    });
+
+    function friendlyDate(iso){
+      if(!iso) return '—';
+      try{ const d=new Date(iso); if(isNaN(d)) return iso; return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}); }catch(e){return iso;}
+    }
+
+    function escapeHtml(s){
+      if(!s && s !== 0) return '';
+      return String(s).replace(/[&<>"']/g, m=> ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+    }
+
+    function renderProfile(profile){
+      pName.textContent = profile.full_name || profile.displayName || (auth.currentUser && auth.currentUser.email) || 'Student';
+      pEmail.textContent = profile.email || (auth.currentUser && auth.currentUser.email) || '';
+      pPhone.textContent = profile.phone || '—';
+      pDob.textContent = profile.dob ? friendlyDate(profile.dob) : '—';
+      pCourse.textContent = profile.course || '—';
+      pSection.textContent = profile.section || '—';
+      pRoll.textContent = profile.rollNo || '—';
+      pBlood.textContent = profile.blood || '—';
+      pFather.textContent = profile.father || '—';
+      pMother.textContent = profile.mother || '—';
+      avatar.textContent = (profile.full_name || profile.email || 'U').split(/\s+/).map(s => s[0]).slice(0,2).join('').toUpperCase();
+      statCourse.textContent = profile.course || '—';
+    }
+
+    function renderAssignments(list){
+      assignmentsRoot.innerHTML = '';
+      if(!list || list.length === 0){
+        assignmentsRoot.innerHTML = '<div class="empty">No pending assignments — you are all caught up 🎉</div>';
+        statPending.textContent = '0';
+        return;
+      }
+      statPending.textContent = String(list.length);
+      list.forEach(item => {
+        const id = item.id;
+        const data = item.data;
+        const el = document.createElement('div');
+        el.className = 'assignment';
+        el.innerHTML = `
+          <div class="left">
+            <h4>${escapeHtml(data.title || 'Untitled')}</h4>
+            <p>${escapeHtml(data.description || '')}</p>
+            <div class="meta">Due: ${friendlyDate(data.dueDate)} • Course: ${escapeHtml(data.course || '—')}</div>
+          </div>
+          <div class="right">
+            <button class="btn complete">Mark complete</button>
+          </div>
+        `;
+        const btn = el.querySelector('.complete');
+        btn.addEventListener('click', async () => {
+          btn.disabled = true; btn.classList.add('disabled'); btn.textContent = 'Updating…';
+          try{
+            await updateDoc(doc(db, 'assignments', id), { status: 'completed', completedAt: new Date().toISOString() });
+            el.remove();
+            statPending.textContent = String(Math.max(0, Number(statPending.textContent) - 1));
+          } catch(err){
+            console.error(err);
+            btn.disabled = false; btn.classList.remove('disabled'); btn.textContent = 'Mark complete';
+            alert('Unable to mark complete — check console.');
+          }
+        });
+        assignmentsRoot.appendChild(el);
+      });
+    }
+
+    // load profile (users/{uid})
+    async function loadProfile(uid){
+      try{
+        const ref = doc(db, 'users', uid);
+        const snap = await getDoc(ref);
+        if(!snap.exists()){
+          // fallback to auth user
+          const fallback = { full_name: auth.currentUser.displayName || '', email: auth.currentUser.email || '' };
+          renderProfile(fallback);
+          return fallback;
+        }
+        const data = snap.data();
+        renderProfile(data);
+        return data;
+      }catch(err){
+        console.error('profile load error', err);
+        const fallback = { full_name: auth.currentUser && auth.currentUser.displayName ? auth.currentUser.displayName : '', email: auth.currentUser && auth.currentUser.email ? auth.currentUser.email : '' };
+        renderProfile(fallback);
+        return fallback;
+      }
+    }
+
+    // load assignments (pending)
+    async function loadAssignments(uid){
+      assignmentsRoot.innerHTML = '<div class="loader">Loading assignments…</div>';
+      try{
+        const col = collection(db, 'assignments');
+        // query: userId == uid && status == "pending", ordered by dueDate if present
+        const q = query(col, where('userId', '==', uid), where('status', '==', 'pending'), orderBy('dueDate', 'asc'));
+        const snap = await getDocs(q);
+        const list = [];
+        snap.forEach(d => list.push({ id: d.id, data: d.data() }));
+        renderAssignments(list);
+      }catch(err){
+        console.error('assignments load error', err);
+        assignmentsRoot.innerHTML = '<div class="empty">Unable to load assignments — check console.</div>';
+      }
+    }
+
+    // Auth state: ensure logged in, then load data
+    onAuthStateChanged(auth, async (user) => {
+      if(!user){
+        // not signed in -> send to login
+        window.location.href = 'edulogin.html';
+        return;
+      }
+      try{
+        const uid = user.uid;
+        const profile = await loadProfile(uid);
+        await loadAssignments(uid);
+        courseNotes.textContent = profile && profile.course ? `You are enrolled in ${profile.course}. Check course page for announcements.` : 'No course notifications.';
+      }catch(e){
+        console.error('init error', e);
+      }
+    });
+
+    // refresh
+    refreshBtn.addEventListener('click', async () => {
+      const u = auth.currentUser;
+      if(u) await loadAssignments(u.uid);
+    });
+
+    // logout
+    logoutBtn.addEventListener('click', async () => {
+      try{
+        await signOut(auth);
+      }catch(e){ console.warn(e); }
+      window.location.href = 'edulogin.html';
+    });
+  </script>
+</body>
+</html>
